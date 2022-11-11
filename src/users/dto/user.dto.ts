@@ -1,6 +1,7 @@
-import { MaxLength, IsEmail, IsString } from 'class-validator'
+import { MaxLength, IsEmail, IsString, IsOptional } from 'class-validator'
 
 export class newUser {
+    @IsOptional()
     @MaxLength(30)
     username: string;
 
