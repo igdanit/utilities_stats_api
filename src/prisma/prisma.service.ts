@@ -23,9 +23,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit{
     }
 
     // Check whether user exist or not
-    async isUserExist(user: newUser) {
+    async getUser<T extends {email: string}>(user: T) {
         return await this.user.findUnique({
             where: {email: user.email},
         })
     }
+
 }

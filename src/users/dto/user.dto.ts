@@ -11,3 +11,11 @@ export class newUser {
     @IsString()
     passwordHash: string;
 }
+
+export class User {
+    @IsEmail()
+    email: string;
+
+    @IsString()
+    passwordHash: string;
+}
