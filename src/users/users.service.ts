@@ -10,8 +10,10 @@ export class UsersService {
     // Whether user exist, if true add them to DB.
     async addUser(user: newUser) {
 
-        if (await this.prismaService.getUser(user)) {
-            throw new UnauthorizedException('Bad credentials')
+        const {username , ...existedUser} = user;
+
+        if (await this.prismaService.getUser(existedUser)) {
+            throw new UnauthorizedException('Bad credentials, hello ma ma')
         }
 
         return await this.prismaService.createUserEntry(user);

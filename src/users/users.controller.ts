@@ -2,20 +2,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { newUser, User } from './dto/user.dto';
 import { UsersService } from './users.service';
 
-@Controller()
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UsePipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }))
-  @Post()
-  index(@Body() user: User | newUser) {
-    if (user instanceof User) {
-      return this.usersService.getUser(user)
-    }
-    return this.usersService.addUser(user)
+  @Post('sign-up')
+  async signUp(@Body() user: newUser) {
+    return await this.usersService.addUser(user)
+  }
+
+  @Post('sign-in')
+  async signIn(@Body() user: User) {
+    return await this.usersService.getUser(user)
   }
 }
