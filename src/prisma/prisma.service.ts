@@ -29,7 +29,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit{
         })
 
         if (!userEntry) throw new UnauthorizedException('Bad credentials')
-    
+
         return userEntry
     }
 
