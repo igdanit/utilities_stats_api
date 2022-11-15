@@ -12,7 +12,7 @@ export class newUser {
     passwordHash: string;
 }
 
-export class User {
+export class UserDTO {
     @IsEmail()
     email: string;
 

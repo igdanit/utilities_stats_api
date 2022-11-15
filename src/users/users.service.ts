@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { newUser, User } from './dto/user.dto';
+import { newUser, UserDTO } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +19,7 @@ export class UsersService {
         return await this.prismaService.createUserEntry(user);
     }
 
-    async getUser(user: User) {
+    async getUser(user: UserDTO) {
         return await this.prismaService.getUser(user)
     }
 }

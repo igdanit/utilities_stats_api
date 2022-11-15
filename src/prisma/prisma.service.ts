@@ -1,4 +1,4 @@
-import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
+import { INestApplication, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { PrismaClient} from '@prisma/client';
 import { newUser } from 'src/users/dto/user.dto';
 
@@ -24,9 +24,13 @@ export class PrismaService extends PrismaClient implements OnModuleInit{
 
     // Check whether user exist or not
     async getUser<T extends {email: string}>(user: T) {
-        return await this.user.findUnique({
+        const userEntry = await this.user.findUnique({
             where: {email: user.email},
         })
+
+        if (!userEntry) throw new UnauthorizedException('Bad credentials')
+    
+        return userEntry
     }
 
 }
