@@ -26,7 +26,7 @@ model Address {
   owner User @relation(fields: [userId], references: [id])
 
   @@map("addresses")
-  @@unique([userId, address])
+  @@index([userId])
 }
 
 model IndicationType {
@@ -37,7 +37,7 @@ model IndicationType {
   indication Indication[]
 
   @@map("indication_types")
-  @@unique([type, addressId])
+  @@index([addressId])
 }
 
 model Indication {
@@ -48,5 +48,5 @@ model Indication {
   indications Int
 
   @@map("indications")
-  @@unique([indicationTypeId, createdAt])
+  @@index([indicationTypeId])
 }
