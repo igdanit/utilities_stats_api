@@ -13,6 +13,39 @@ model User {
   email String @unique
   username String?
   passwordHash String
+  addresses Address[]
 
   @@map("users") 
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  userId Int
+  address String
+  indication_type IndicationType[]
+  owner User @relation(fields: [userId], references: [id])
+
+  @@map("addresses")
+  @@unique([userId, address])
+}
+
+model IndicationType {
+  id Int @id @default(autoincrement())
+  addressId Int
+  address Address @relation(fields: [addressId], references: [id])
+  type String  
+  indication Indication[]
+
+  @@map("indication_types")
+  @@unique([type, addressId])
+}
+
+model Indication {
+  id Int @id @default(autoincrement())
+  indicationTypeId Int
+  indicationType IndicationType @relation(fields: [indicationTypeId], references: [id])
+  createdAt DateTime @default(now())
+  indications Int
+
+  @@map("indications")
 }
