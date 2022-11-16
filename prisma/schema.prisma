@@ -48,4 +48,5 @@ model Indication {
   indications Int
 
   @@map("indications")
+  @@unique([indicationTypeId, createdAt])
 }
