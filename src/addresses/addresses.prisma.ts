@@ -30,4 +30,10 @@ export class AddressesPrisma {
             where: {id}
         })
     }
+
+    async getUsersAddressses(userID: number) {
+        return await this.prismaService.address.findMany({
+            where: {id: userID}
+        })
+    }
 }
