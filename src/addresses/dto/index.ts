@@ -1,0 +1,1 @@
+export { newAddress } from './addresses.dto'

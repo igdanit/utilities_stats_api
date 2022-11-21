@@ -1,6 +1,8 @@
-import { INestApplication, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, INestApplication, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { PrismaClient} from '@prisma/client';
+import { newAddress } from 'src/addresses/dto';
 import { newUser } from 'src/users/dto/user.dto';
+import { FindObject } from './prisma.service.interface';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit{
@@ -19,18 +21,33 @@ export class PrismaService extends PrismaClient implements OnModuleInit{
 
     // Create user entry
     async createUserEntry(user: newUser) {
-        await this.user.create({ data: user });
+        return await this.user.create({ data: user });
     }
 
-    // Check whether user exist or not
-    async getUser<T extends {email: string}>(user: T) {
+    // Fetch user entry
+    async getUser(user: FindObject) {
+
+        const findObject = 'id' in user ? {id: user.id} : {email: user.email}
+
         const userEntry = await this.user.findUnique({
-            where: {email: user.email},
+            where: findObject
         })
 
-        if (!userEntry) throw new UnauthorizedException('Bad credentials')
+        if (userEntry === null) throw new UnauthorizedException("Bad credentials")
 
         return userEntry
     }
 
+    // Check whether user exist or not
+    async isUserExist(user: FindObject): Promise<boolean> {
+        try {
+            await this.getUser(user);
+            return true
+        } catch (e) {
+            if (e instanceof UnauthorizedException) {
+                return false
+            }
+            throw e
+        }
+    }
 }

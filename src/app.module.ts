@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config'
+import { AddressesModule } from './addresses/addresses.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ConfigModule } from '@nestjs/config'
       isGlobal: true,
       cache: true,
     }),
+    AddressesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
