@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from '@prisma/client';
 import { newUser, UserDTO } from './dto/user.dto';
@@ -13,7 +13,7 @@ export class UsersService {
 
         const {username , ...existedUser} = user;
 
-        if (await this.isUserExist(existedUser)) throw new UnauthorizedException('Bad credentials')
+        if (await this.isUserExist(existedUser)) throw new ConflictException('The user already exist')
 
         return await this.prismaService.createUserEntry(user);
     }
