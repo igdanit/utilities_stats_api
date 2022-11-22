@@ -6,8 +6,11 @@ export class AddressesPrisma {
     constructor(protected readonly prismaService: PrismaService) {}
     
     async addAddress(address: newAddress) {
-        if (await this.prismaService.isUserExist({id: address.userId})) {
-            return await this.prismaService.address.create({ data: address })
+        if (await this.prismaService.isUserExist({id: address.userID})) {
+            return await this.prismaService.address.create({ data: {
+                address: address.address,
+                userID: address.userID
+            }})
         }
         throw new ForbiddenException("User doesn't exist")
     }
@@ -31,9 +34,9 @@ export class AddressesPrisma {
         })
     }
 
-    async getUsersAddressses(userID: number) {
+    async getUserAddresses(userID: number) {
         return await this.prismaService.address.findMany({
-            where: {id: userID}
+            where: {userID}
         })
     }
 }
