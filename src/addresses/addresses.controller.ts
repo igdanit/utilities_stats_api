@@ -10,7 +10,7 @@ export class AddressesController {
     constructor(private readonly addressService: AddressesService) {}
 
     @Get()
-    async getUsersAddresses(@Query('user', ParseIntPipe) userID: number ) {
+    async getAddresses(@Query('user', ParseIntPipe) userID: number ) {
         const addressesList = await this.addressService.getUserAddresses(userID);
         const addresses = Object.fromEntries(addressesList.entries());
         return addresses
