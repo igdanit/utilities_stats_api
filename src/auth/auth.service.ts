@@ -32,7 +32,7 @@ export class AuthService {
 
         const userEntry = await this.validateUser(user);
 
-        const payload = {email: userEntry.email, sub: userEntry.id}
+        const payload = {sub: userEntry.id}
 
         return {
             access_token: this.jwtService.sign(payload),
