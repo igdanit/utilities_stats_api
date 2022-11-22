@@ -5,5 +5,3 @@ export interface UserWithId {
 export interface UserWithEmail {
     email: string;
 }
-
-export type FindObject = UserWithId | UserWithEmail

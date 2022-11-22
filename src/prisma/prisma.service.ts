@@ -2,7 +2,7 @@ import { BadRequestException, ForbiddenException, INestApplication, Injectable, 
 import { PrismaClient} from '@prisma/client';
 import { newAddress } from 'src/addresses/dto';
 import { newUser } from 'src/users/dto/user.dto';
-import { FindObject } from './prisma.service.interface';
+import { UserWithEmail, UserWithId } from './prisma.service.interface';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit{
@@ -25,7 +25,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit{
     }
 
     // Fetch user entry
-    async getUser(user: FindObject) {
+    async getUser(user: UserWithEmail | UserWithId) {
 
         const findObject = 'id' in user ? {id: user.id} : {email: user.email}
 
@@ -39,7 +39,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit{
     }
 
     // Check whether user exist or not
-    async isUserExist(user: FindObject): Promise<boolean> {
+    async isUserExist(user: UserWithEmail | UserWithId): Promise<boolean> {
         try {
             await this.getUser(user);
             return true
