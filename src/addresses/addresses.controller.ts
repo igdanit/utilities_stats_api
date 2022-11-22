@@ -31,6 +31,6 @@ export class AddressesController {
 
     @Put(':id')
     async editAddress(@Param('id') addressID: number, @Body() newAddress: {address: string}, @UserID() userID: number) {
-        return await this.addressService.changeAddress(newAddress, addressID, userID)
+        return await this.addressService.changeAddress(newAddress.address, addressID, userID)
     }
 }
