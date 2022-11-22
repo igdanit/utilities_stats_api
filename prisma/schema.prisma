@@ -20,13 +20,13 @@ model User {
 
 model Address {
   id Int @id @default(autoincrement())
-  userId Int
+  userID Int
   address String
   indication_type IndicationType[]
-  owner User @relation(fields: [userId], references: [id])
+  owner User @relation(fields: [userID], references: [id])
 
   @@map("addresses")
-  @@index([userId])
+  @@index([userID])
 }
 
 model IndicationType {
