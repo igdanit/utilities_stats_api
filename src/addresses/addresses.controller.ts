@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Query, ParseIntPipe, Post, UseGuards, HttpStatus, Delete, Param, Put,  } from '@nestjs/common';
+import { Controller, Get, Body, Query, ParseIntPipe, Post, UseGuards, HttpStatus, Delete, Param, Put, Req,  } from '@nestjs/common';
 import { JwtAuthGuards } from 'src/auth/auth.jwt-guard';
 import { UserID } from 'src/decorators';
 import { AddressesService } from './addresses.service';
@@ -9,15 +9,15 @@ export class AddressesController {
 
     constructor(private readonly addressService: AddressesService) {}
 
-    @Get()
-    async getAddresses(@Query('user', ParseIntPipe) userID: number ) {
+    @Get(':id')
+    async getAddresses(@Param('id', ParseIntPipe) userID: number ) {
         const addressesList = await this.addressService.getUserAddresses(userID);
         const addresses = Object.fromEntries(addressesList.entries());
         return addresses
     }
 
     @Post()
-    async addAddress(@Body() address: {address: string}, @UserID() id: number) {
+    async addAddress(@Req() req: any, @Body() address: {address: string}, @UserID() id: number) {
         await this.addressService.newAddress({
             address: address.address,
             userID: id,
