@@ -32,10 +32,19 @@ export class AuthService {
 
         const userEntry = await this.validateUser(user);
 
-        const payload = {sub: userEntry.id}
+        return await this.signPayload({sub: userEntry.id})
 
+    }
+
+    async signPayload(payload: {sub: number}) {
         return {
             access_token: this.jwtService.sign(payload),
         }
+    }
+
+    async updateJWT(userID: number) {
+
+        return await this.signPayload({sub: userID})
+
     }
 }

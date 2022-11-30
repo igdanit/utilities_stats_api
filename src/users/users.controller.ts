@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, Res, HttpStatus, Query, Param, UnauthorizedException, ParseIntPipe} from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Res, HttpStatus, Query, Param, UnauthorizedException, ParseIntPipe, ForbiddenException} from '@nestjs/common';
 import { Response } from 'express';
 import { JwtAuthGuards } from 'src/auth/auth.jwt-guard';
 import { UserID } from 'src/decorators';
@@ -14,4 +14,12 @@ export class UsersController {
         private readonly userService: UsersService,
         private readonly prismaService: PrismaService,
         ) {}
+
+    @Get(':id')
+    async getUser(@Param('id') id: number, @UserID() userID:number) {
+        if (id !== userID) {
+            throw new ForbiddenException('Trying fetch another user data')
+        }
+        return await this.userService.getUser()
+    }
 }

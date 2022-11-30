@@ -1,7 +1,9 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res, UseGuards, UsePipes } from '@nestjs/common';
 import { Response } from 'express';
+import { UserID } from 'src/decorators';
 import { newUser, UserDTO } from 'src/users/dto/user.dto';
 import { UsersService } from 'src/users/users.service';
+import { JwtAuthGuards } from './auth.jwt-guard';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -29,6 +31,13 @@ export class AuthController {
     @Post('sign-in')
     async signIn(@Body() user: UserDTO) {
         return await this.authService.login(user)
+    }
+
+
+    @UseGuards(JwtAuthGuards)
+    @Get('update-jwt')
+    async updateJWT(@UserID() userID: number) {
+        return await this.authService.updateJWT(userID)
     }
 
 }
