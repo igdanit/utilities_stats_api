@@ -2,6 +2,7 @@ import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/co
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from '@prisma/client';
 import { newUser, UserDTO } from './dto/user.dto';
+import { UserWithEmail, UserWithId } from 'src/prisma/prisma.service.interface';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +19,7 @@ export class UsersService {
         return await this.prismaService.createUserEntry(user);
     }
 
-    async getUser(user: UserDTO) {
+    async getUser(user: UserWithEmail | UserWithId) {
         return await this.prismaService.getUser(user)
     }
 
