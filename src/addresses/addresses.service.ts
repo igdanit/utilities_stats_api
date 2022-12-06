@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AddressesPrisma } from './addresses.prisma';
 import { newAddress } from './dto';
@@ -33,7 +34,13 @@ export class AddressesService extends AddressesPrisma{
     }
 
     async delAddress(addressId: number, userId: number) {
-        await this.deleteAddress(addressId)
+        try {
+            await this.deleteAddress(addressId)
+        } catch (exception) {
+            if (exception instanceof Prisma.PrismaClientKnownRequestError && exception.code === 'P2015') {
+                return {'Status Code': 401, message:"Entry doesn't exist"}
+            }
+        }
     }
 
 }
