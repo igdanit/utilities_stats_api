@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "google/type/date.proto";
+
+message IndicationsRequest {
+    int32 user_id = 1;
+    int32 address_id = 2;
+    int32 indications_type_id = 3;
+    int32 max_quantity = 4; // The number of indications will be 0 <= N <= max_quantity, N is integer
+}
+
+message IndicationsResponse {
+    int32 indication_id = 1;
+    int32 indication = 2;
+    google.type.Date created_date = 3;
+}
+
+service Indications {
+    rpc get_indications(IndicationsRequest) returns (IndicationsResponse) {}
+} 
