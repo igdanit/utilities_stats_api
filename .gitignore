@@ -36,3 +36,8 @@ lerna-debug.log*
 
 # Environment
 .env
+
+# microservices/indications
+/microservices/indications/venv
+/microservices/indications/protobufs/*.py
+/microservices/indications/protobufs/*.pyi
