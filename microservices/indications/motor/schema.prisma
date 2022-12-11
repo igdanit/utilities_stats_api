@@ -1,0 +1,29 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// generator
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = 5
+}
+
+// data models
+model IndicationType {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId Int
+  address String
+  type String
+  indication Indication[]  
+}
+
+model Indication {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId Int
+  indicationTypeId String @db.ObjectId
+  createdAt DateTime @default(now())
+  indications Int
+  indicationType IndicationType @relation(fields: [indicationTypeId], references: [id])
+}
