@@ -14,14 +14,13 @@ generator client {
 model IndicationType {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId Int
-  address String
+  addressID Int
   type String
   indication Indication[]  
 }
 
 model Indication {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId Int
   indicationTypeId String @db.ObjectId
   createdAt DateTime @default(now())
   indications Int
