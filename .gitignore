@@ -41,3 +41,8 @@ lerna-debug.log*
 /microservices/indications/venv
 /microservices/indications/protobufs/*.py
 /microservices/indications/protobufs/*.pyi
+!/microservices/indications/protobufs/__init__.py
+
+
+#Caches
+/microservices/indications/src/__pycache__
