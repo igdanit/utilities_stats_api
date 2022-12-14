@@ -1,65 +1,59 @@
 syntax = "proto3";
 
-import "google/type/date.proto";
+import "google/type/datetime.proto";
 import "google/protobuf/empty.proto";
 
-message Address {
-    int32 user_id = 1;
-    string address = 2;
-}
-
+// Request multiple or single IndicationType's for certain addressID
 message GetIndicationsTypesRequest {
-    Address address = 1;
-    int32 max_quantity = 3;
+    int32 addressID = 1;
+    int32 maxQuantity = 2;
 }
 
 message PostIndicationTypeRequest {
-    Address address = 1;
+    int32 addressID = 1;
     string type = 2;
 }
 
 message DeleteIndicationTypeRequest {
-    int32 user_id = 1;
-    int32 type_id = 2;
+    int32 IndicationTypeID = 1;
+}
+
+message IndicationType {
+    int32 id = 1;
+    int32 addressID = 2;
+    string type = 3;
+}
+
+message IndicationsTypesResponse {
+    repeated IndicationType indicationsTypes = 1;
 }
 
 message GetIndicationsRequest {
-    Address address = 1;
-    int32 indications_type_id = 2;
-    int32 max_quantity = 3; // The number of indications will be 0 <= N <= max_quantity, N is integer
+    int32 indicationTypeID = 1;
+    int32 maxQuantity = 2; // The number of indications will be 0 <= N <= max_quantity, N is integer
 }
 
 message PostIndicationRequest {
-    Address address = 1;
-    int32 indications_type_id = 2;
-    int32 indication = 3;
+    int32 indicationsTypeID = 1;
+    int32 indication = 2;
 }
 
 message Indication {
     int32 id = 1;
     int32 indication = 2;
-    string indication_type = 3;
-    google.type.Date created_date = 4;
+    int32 indicationTypeID = 3;
+    google.type.DateTime createdAt = 4;
 }
 
 message IndicationsResponse {
     repeated Indication indications = 1;
 }
 
-message IndicationType {
-    int32 id = 1;
-    string address = 2;
-    string type = 3;
-}
-
-message IndicationsTypesResponse {
-    repeated IndicationType indications_types = 1;
-}
 
 service Indications {
     rpc post_indications(PostIndicationRequest) returns (google.protobuf.Empty) {}
-    rpc post_indication_type(PostIndicationTypeRequest) returns (google.protobuf.Empty) {}
     rpc get_indications(GetIndicationsRequest) returns (IndicationsResponse) {}
-    rpc get_indications_types(GetIndicationsTypesRequest) returns (IndicationsTypesResponse) {}
+    rpc post_indication_type(PostIndicationTypeRequest) returns (google.protobuf.Empty) {}
+    rpc get_indication_types(GetIndicationsTypesRequest) returns (IndicationsTypesResponse) {}
 }
 
