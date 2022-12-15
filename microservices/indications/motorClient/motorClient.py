@@ -5,8 +5,10 @@ sys.path.append('..')
 import motor.motor_asyncio as motor
 from config import settings
 from abc import ABC, abstractmethod
-from typing import Dict, Awaitable, List
+from typing import  Awaitable
 from datetime import datetime
+from grpcServer.date_pb2 import Date
+from grpcServer.indications_pb2 import PostIndicationRequest, PostIndicationTypeRequest
 
 from motor.motor_asyncio import AsyncIOMotorCollection
 
@@ -31,10 +33,6 @@ class MotorClient(ABC):
 
     @abstractmethod
     def delete_collection(self):
-        pass
-
-    @abstractmethod
-    def serialize_document(self, document):
         pass
 
 
@@ -69,35 +67,16 @@ class IndicationMongoService(MongoClient):
         self.indications = self.get_collection('indcations')
         self.indications_types= self.get_collection('indicationsTypes')
 
-    async def insert_indication(self, indication):
-        document = self.serialize_indication(indication)
-        return await self.indications.insert_one(document)
+    async def insert_indication(self, indication: dict):
+        return await self.indications.insert_one(indication)
     
-    async def get_indications(self, query: Dict, amount: int) -> Awaitable[List]:
+    async def get_indications(self, query: dict, amount: int) -> Awaitable[list]:
         cursor = self.indications.find(query)
         return await cursor.to_list(amount)
 
-    async def insert_indication_type(self, type):
-        document = self.serialize_indication_type(type)
-        return await self.indications_types.insert_one(document)
+    async def insert_indication_type(self, type: dict):
+        return await self.indications_types.insert_one(type)
 
-    async def get_indications_types(self, query: Dict, amount: int):
+    async def get_indications_types(self, query: dict, amount: int):
         cursor = self.indications_types.find(query)
         return await cursor.to_list(amount)
-        
-
-    def serialize_indication(self, document) -> Dict:
-        return {
-            'indication': document["indications"],
-            'indicationTypeID': document["indicationTypeID"],
-            'createdAt': datetime.utcnow()
-        }
-
-    def serialize_indication_type(self, document) -> Dict:
-        return {
-            'userID': document["userID"],
-            'addressID': document["addressID"],
-            'type': document["type"]
-
-        }
-
