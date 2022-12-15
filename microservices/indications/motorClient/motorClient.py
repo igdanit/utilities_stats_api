@@ -1,5 +1,9 @@
+import sys
+
+sys.path.append('..')
+
 import motor.motor_asyncio as motor
-from src.config import settings
+from config import settings
 from abc import ABC, abstractmethod
 from typing import Dict, Awaitable, List
 from datetime import datetime

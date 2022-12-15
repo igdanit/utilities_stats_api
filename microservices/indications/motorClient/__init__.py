@@ -1,0 +1,1 @@
+from .motorClient import IndicationMongoService
