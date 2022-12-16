@@ -31,10 +31,6 @@ class MotorClient(ABC):
     def get_collection(self, collection_name: str):
         pass
 
-    @abstractmethod
-    def delete_collection(self):
-        pass
-
 
 class MongoClient(MotorClient):
 

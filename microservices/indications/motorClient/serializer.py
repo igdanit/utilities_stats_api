@@ -2,8 +2,8 @@ import sys
 
 sys.path.append('..')
 
-from grpc.date_pb2 import Date
-from grpc.indications_pb2 import PostIndicationRequest, PostIndicationTypeRequest
+from grpcServer.date_pb2 import Date
+from grpcServer.indications_pb2 import PostIndicationRequest, PostIndicationTypeRequest
 from abc import ABC, abstractmethod
 
 class grpcSerializer(ABC):

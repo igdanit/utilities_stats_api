@@ -4,10 +4,10 @@ from datetime import datetime
 sys.path.append('..')
 
 from grpc import ServicerContext
-import indications_pb2_grpc
-from indications_pb2 import GetIndicationsRequest, PostIndicationRequest, PostIndicationTypeRequest, GetIndicationsTypesRequest, Indication, IndicationsResponse, IndicationType, IndicationsTypesResponse
+import grpcServer.indications_pb2_grpc as indications_pb2_grpc
+from grpcServer.indications_pb2 import GetIndicationsRequest, PostIndicationRequest, PostIndicationTypeRequest, GetIndicationsTypesRequest, Indication, IndicationsResponse, IndicationType, IndicationsTypesResponse
 from motorClient import IndicationMongoService
-from date_pb2 import Date
+from grpcServer.date_pb2 import Date
 from motorClient.serializer import grpcSerializer
 
 class IndicationsService(indications_pb2_grpc.IndicationsServicer):
