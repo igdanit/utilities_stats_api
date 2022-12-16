@@ -36,13 +36,13 @@ lerna-debug.log*
 
 # Environment
 .env
+venv/
 
 # microservices/indications
-/microservices/indications/venv
-/microservices/indications/grpcServer/*.py
-/microservices/indications/grpcServer/*.pyi
+# /microservices/indications/grpcServer/*.py
+# /microservices/indications/grpcServer/*.pyi
 !/microservices/indications/grpcServer/service.py
 
 
 #Caches
-/microservices/indications/src/__pycache__
+__pycache__/
