@@ -1,3 +1,0 @@
-
-class BadRequest(BaseException):
-    pass
