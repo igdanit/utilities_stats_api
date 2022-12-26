@@ -23,7 +23,7 @@ class grpcMessageToDictSerializer(grpcSerializer):
     def serialize_indication(cls, document: PostIndicationRequest) -> dict:
         return {
             'indication': document.indication,
-            'indicationTypeID': document.indicationsTypeID,
+            'indicationsTypeID': document.indicationsTypeID,
             'createdAt': cls.serialize_date(document.createdAt)
         }
 
