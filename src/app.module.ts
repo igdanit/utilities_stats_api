@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config'
 import { AddressesModule } from './addresses/addresses.module';
+import { IndicationsModule } from './indications/indications.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AddressesModule } from './addresses/addresses.module';
       cache: true,
     }),
     AddressesModule,
+    IndicationsModule
   ],
   controllers: [AppController],
   providers: [AppService],
