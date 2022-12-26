@@ -2,9 +2,10 @@ import asyncio
 import grpc
 import grpc.aio
 
-from grpcServer import indications_pb2_grpc
-from grpcServer.service import IndicationsService
-from motorClient import IndicationMongoService, grpcMessageToDictSerializer
+from grpcService.protobufs import indications_pb2_grpc
+from grpcService.service import IndicationsService
+from motorService.motorClient import IndicationMongoService
+from motorService.serializer import grpcMessageToDictSerializer
 
 
 async def main():
@@ -12,7 +13,7 @@ async def main():
     server = grpc.aio.server()
     server.add_insecure_port("[::]:50051")
     db = IndicationMongoService()
-    serializer = grpcMessageToDictSerializer()
+    serializer = grpcMessageToDictSerializer
     indications_pb2_grpc.add_IndicationsServicer_to_server(IndicationsService(database=db, serializer=serializer), server)
 
     await server.start()
