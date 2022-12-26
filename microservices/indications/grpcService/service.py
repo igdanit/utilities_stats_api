@@ -6,6 +6,7 @@ import grpcService.protobufs.indications_pb2_grpc as indications_pb2_grpc
 from grpcService.protobufs.indications_pb2 import GetIndicationsRequest, PostIndicationRequest, PostIndicationTypeRequest, GetIndicationsTypesRequest, Indication, IndicationsResponse, IndicationType, IndicationsTypesResponse
 from motorService.motorClient import IndicationMongoService
 from grpcService.protobufs.date_pb2 import Date
+from google.protobuf.empty_pb2 import Empty
 from motorService.serializer import grpcSerializer
 
 
@@ -15,7 +16,7 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
         self._db = database
         self.serializer = serializer
 
-    async def get_indications(self, request: GetIndicationsRequest, context: ServicerContext):
+    async def GetIndications(self, request: GetIndicationsRequest, context: ServicerContext):
         indications_list = await self._db.get_indications(
             {'indicationTypeID': request.indicationTypeID},
             request.maxQuantity
@@ -41,7 +42,9 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
         #         indications_list
         #     ))
 
-    async def post_indications(self, request: PostIndicationRequest, context: ServicerContext):
+    async def PostIndication(self, request: PostIndicationRequest, context: ServicerContext):
+
+        print(request)
 
         # If date has default value then set date.now()
         if not (request.HasField('createdAt')):
@@ -52,10 +55,12 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
                 'year': today.year
                 }
 
-        serialized_indcation = self.serializer(request)
-        return await self._db.insert_indication(serialized_indcation)
+        serialized_indcation = self.serializer.serialize_indication(request)
+        print('serialized')
+        await self._db.insert_indication(serialized_indcation)
+        return Empty()
 
-    async def get_indication_types(self, request: GetIndicationsTypesRequest, context: ServicerContext):
+    async def getIndicationsTypes(self, request: GetIndicationsTypesRequest, context: ServicerContext):
         indication_types_list = await self._db.get_indication_types(
             {'addressID': request.addressID},
             request.maxQuantity
@@ -68,6 +73,7 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
             ) for indication_type in indication_types_list
         ))
 
-    async def post_indication_type(self, request: PostIndicationTypeRequest, context: ServicerContext):
-        serialized_type = self.serializer(request)
-        return await self._db.insert_indication_type(serialized_type)
+    async def PostIndicationType(self, request: PostIndicationTypeRequest, context: ServicerContext):
+        serialized_type = self.serializer.serialize_indication_type(request)
+        await self._db.insert_indication_type(serialized_type)
+        return Empty()
