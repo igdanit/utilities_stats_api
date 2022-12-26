@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "proto:indications": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./microservices/indications/grpcService/protobufs --ts_proto_out=src/indications/ microservices/indications/grpcService/protobufs/indications.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -21,11 +22,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.0",
+    "@grpc/proto-loader": "^0.7.4",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/mapped-types": "*",
+    "@nestjs/microservices": "^9.2.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.6.1",
