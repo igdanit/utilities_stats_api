@@ -7,6 +7,8 @@ from grpcService.service import IndicationsService
 from motorService.motorClient import IndicationMongoService
 from motorService.serializer import grpcMessageToDictSerializer
 
+import logger
+
 
 async def main():
     grpc.aio.init_grpc_aio()
