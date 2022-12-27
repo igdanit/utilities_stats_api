@@ -9,6 +9,8 @@ from grpcService.protobufs.date_pb2 import Date
 from google.protobuf.empty_pb2 import Empty
 from motorService.serializer import grpcSerializer
 
+from motorService.exceptions import IndexPairAlreadyExist
+
 
 class IndicationsService(indications_pb2_grpc.IndicationsServicer):
 
@@ -43,9 +45,6 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
         #     ))
 
     async def PostIndication(self, request: PostIndicationRequest, context: ServicerContext):
-
-        print(request)
-
         # If date has default value then set date.now()
         if not (request.HasField('createdAt')):
             today = datetime.utcnow()
@@ -56,8 +55,12 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
                 }
 
         serialized_indcation = self.serializer.serialize_indication(request)
-        print('serialized')
-        await self._db.insert_indication(serialized_indcation)
+        
+        try:
+            await self._db.insert_indication(serialized_indcation)
+        except IndexPairAlreadyExist:
+            pass
+
         return Empty()
 
     async def getIndicationsTypes(self, request: GetIndicationsTypesRequest, context: ServicerContext):
@@ -75,5 +78,10 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
 
     async def PostIndicationType(self, request: PostIndicationTypeRequest, context: ServicerContext):
         serialized_type = self.serializer.serialize_indication_type(request)
-        await self._db.insert_indication_type(serialized_type)
+
+        try:
+            await self._db.insert_indication_type(serialized_type)
+        except IndexPairAlreadyExist:
+            pass
+
         return Empty()
