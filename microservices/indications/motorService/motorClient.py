@@ -1,11 +1,14 @@
-import motor.motor_asyncio as motor
-from config import settings
 from abc import ABC, abstractmethod
 from typing import  Awaitable
-from datetime import datetime
+from loguru import logger
+from utilities import MotorProxy
+
 from grpcService.protobufs.date_pb2 import Date
 from grpcService.protobufs.indications_pb2 import PostIndicationRequest, PostIndicationTypeRequest
+from config import settings
+from motorService.exceptions import IndexPairAlreadyExist
 
+import motor.motor_asyncio as motor
 from motor.motor_asyncio import AsyncIOMotorCollection
 
 def singleton(cls):
@@ -36,8 +39,8 @@ class MongoClient(MotorClient):
         self.db = self._client[db_name]
 
         # Some logs. % uri and db_name must not be available for all logs checkers %
-        print(f'Connected to MongoDB by : {uri}')
-        print(f'Connected to {db_name} database')
+        logger.info(f'Connected to MongoDB by : {uri}')
+        logger.info(f'Connected to {db_name} database')
 
     def __enter__(self):
         return self
@@ -45,11 +48,11 @@ class MongoClient(MotorClient):
     # Close client connection
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._client.close
-        print('connection to MongoDB closed')
+        logger.info('connection to MongoDB closed')
 
     # Return existing or creates new one
     def get_collection(self, collection_name) -> AsyncIOMotorCollection:
-        return self.db[collection_name]
+        return MotorProxy(self.db[collection_name])
 
 
 @singleton
