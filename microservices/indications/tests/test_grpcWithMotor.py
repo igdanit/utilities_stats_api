@@ -17,7 +17,7 @@ class TestService:
         GetIndicationsRequest(indicationTypeID='1', maxQuantity=1)
     ])
     async def test_get_indications(self, req):
-        response = await self.service.get_indications(req, None)
+        response = await self.service.GetIndications(req, None)
         print(response)
         assert True        
 
