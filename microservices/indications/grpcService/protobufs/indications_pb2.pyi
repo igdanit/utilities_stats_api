@@ -19,9 +19,9 @@ class GetIndicationsTypesRequest(_message.Message):
     __slots__ = ["addressID", "maxQuantity"]
     ADDRESSID_FIELD_NUMBER: _ClassVar[int]
     MAXQUANTITY_FIELD_NUMBER: _ClassVar[int]
-    addressID: str
+    addressID: int
     maxQuantity: int
-    def __init__(self, addressID: _Optional[str] = ..., maxQuantity: _Optional[int] = ...) -> None: ...
+    def __init__(self, addressID: _Optional[int] = ..., maxQuantity: _Optional[int] = ...) -> None: ...
 
 class Indication(_message.Message):
     __slots__ = ["createdAt", "id", "indication", "indicationTypeID"]
@@ -32,18 +32,18 @@ class Indication(_message.Message):
     createdAt: _date_pb2.Date
     id: str
     indication: int
-    indicationTypeID: int
-    def __init__(self, id: _Optional[str] = ..., indication: _Optional[int] = ..., indicationTypeID: _Optional[int] = ..., createdAt: _Optional[_Union[_date_pb2.Date, _Mapping]] = ...) -> None: ...
+    indicationTypeID: str
+    def __init__(self, id: _Optional[str] = ..., indication: _Optional[int] = ..., indicationTypeID: _Optional[str] = ..., createdAt: _Optional[_Union[_date_pb2.Date, _Mapping]] = ...) -> None: ...
 
 class IndicationType(_message.Message):
     __slots__ = ["addressID", "id", "type"]
     ADDRESSID_FIELD_NUMBER: _ClassVar[int]
     ID_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
-    addressID: str
+    addressID: int
     id: str
     type: str
-    def __init__(self, id: _Optional[str] = ..., addressID: _Optional[str] = ..., type: _Optional[str] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., addressID: _Optional[int] = ..., type: _Optional[str] = ...) -> None: ...
 
 class IndicationsResponse(_message.Message):
     __slots__ = ["indications"]
@@ -71,6 +71,6 @@ class PostIndicationTypeRequest(_message.Message):
     __slots__ = ["addressID", "type"]
     ADDRESSID_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
-    addressID: str
+    addressID: int
     type: str
-    def __init__(self, addressID: _Optional[str] = ..., type: _Optional[str] = ...) -> None: ...
+    def __init__(self, addressID: _Optional[int] = ..., type: _Optional[str] = ...) -> None: ...
