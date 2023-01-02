@@ -16,7 +16,7 @@ def test_serialize_date(date_object):
     }
 
 @pytest.mark.parametrize("indication_type", [
-    PostIndicationTypeRequest(addressID='1', type='AMOGUS'),
+    PostIndicationTypeRequest(addressID=1, type='AMOGUS'),
 ])
 def test_serialize_indication_type(indication_type: PostIndicationTypeRequest):
     assert gRPCserializer.serialize_indication_type(indication_type) == {
@@ -30,7 +30,7 @@ def test_serialize_indication_type(indication_type: PostIndicationTypeRequest):
 def test_serialize_indication(indication: PostIndicationRequest):
     assert gRPCserializer.serialize_indication(indication) == {
         "indication": indication.indication,
-        "indicationTypeID": indication.indicationsTypeID,
+        "indicationsTypeID": indication.indicationsTypeID,
         "createdAt": {
             "day": indication.createdAt.day,
             "month": indication.createdAt.month,
