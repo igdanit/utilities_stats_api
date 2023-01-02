@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from grpcService.protobufs.date_pb2 import Date
 from grpcService.protobufs.indications_pb2 import PostIndicationRequest, PostIndicationTypeRequest
 
+
 class grpcSerializer(ABC):
 
     @abstractmethod

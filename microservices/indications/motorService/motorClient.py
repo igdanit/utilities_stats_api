@@ -5,19 +5,13 @@ from utilities import MotorProxy
 
 from grpcService.protobufs.date_pb2 import Date
 from grpcService.protobufs.indications_pb2 import PostIndicationRequest, PostIndicationTypeRequest
-from config import settings
 from motorService.exceptions import IndexPairAlreadyExist
+from config import settings
+from utilities import singleton
 
 import motor.motor_asyncio as motor
 from motor.motor_asyncio import AsyncIOMotorCollection
 
-def singleton(cls):
-    instances = {}
-    def wrapper(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return wrapper
 
 # DB driver interface
 class MotorClient(ABC):
@@ -80,6 +74,6 @@ class IndicationMongoService(MongoClient):
     async def insert_indication_type(self, type: dict):
         return await self.indications_types.insert_one(type)
 
-    async def get_indication_types(self, query: dict, amount: int):
+    async def get_indication_types(self, query: dict, amount: int) -> Awaitable[list]:
         cursor = self.indications_types.find(query)
         return await cursor.to_list(amount)
