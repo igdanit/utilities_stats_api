@@ -10,23 +10,17 @@ from config import settings
 client = pymongo.MongoClient(settings.DATABASE_URL)
 
 db = client[settings.MONGO_INITDB_DATABASE]
-indications = db.get_collection('indications')
-indication_types = db.get_collection('indicationTypes')
+indications = db.get_collection("indications")
+indication_types = db.get_collection("indicationTypes")
 
 indications.create_index(
-    [
-        ('createdAt', pymongo.DESCENDING),
-        ('indicationTypeID', pymongo.ASCENDING)
-    ],
-    name = 'indicationsIndex',
-    unique = True
+    [("createdAt", pymongo.DESCENDING), ("indicationTypeID", pymongo.ASCENDING)],
+    name="indicationsIndex",
+    unique=True,
 )
 
 indication_types.create_index(
-    [
-        ('addressID', pymongo.ASCENDING),
-        ('type', pymongo.TEXT)
-    ],
-    name = 'indicationTypesIndex',
-    unique = True
+    [("addressID", pymongo.ASCENDING), ("type", pymongo.TEXT)],
+    name="indicationTypesIndex",
+    unique=True,
 )
