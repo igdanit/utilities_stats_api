@@ -16,25 +16,25 @@ class IndicationsStub(object):
             channel: A grpc.Channel.
         """
         self.PostIndication = channel.unary_unary(
-                '/indications.Indications/PostIndication',
-                request_serializer=indications__pb2.PostIndicationRequest.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                )
+            "/indications.Indications/PostIndication",
+            request_serializer=indications__pb2.PostIndicationRequest.SerializeToString,
+            response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
         self.GetIndications = channel.unary_unary(
-                '/indications.Indications/GetIndications',
-                request_serializer=indications__pb2.GetIndicationsRequest.SerializeToString,
-                response_deserializer=indications__pb2.IndicationsResponse.FromString,
-                )
+            "/indications.Indications/GetIndications",
+            request_serializer=indications__pb2.GetIndicationsRequest.SerializeToString,
+            response_deserializer=indications__pb2.IndicationsResponse.FromString,
+        )
         self.PostIndicationType = channel.unary_unary(
-                '/indications.Indications/PostIndicationType',
-                request_serializer=indications__pb2.PostIndicationTypeRequest.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                )
+            "/indications.Indications/PostIndicationType",
+            request_serializer=indications__pb2.PostIndicationTypeRequest.SerializeToString,
+            response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        )
         self.GetIndicationsTypes = channel.unary_unary(
-                '/indications.Indications/GetIndicationsTypes',
-                request_serializer=indications__pb2.GetIndicationsTypesRequest.SerializeToString,
-                response_deserializer=indications__pb2.IndicationsTypesResponse.FromString,
-                )
+            "/indications.Indications/GetIndicationsTypes",
+            request_serializer=indications__pb2.GetIndicationsTypesRequest.SerializeToString,
+            response_deserializer=indications__pb2.IndicationsTypesResponse.FromString,
+        )
 
 
 class IndicationsServicer(object):
@@ -43,124 +43,173 @@ class IndicationsServicer(object):
     def PostIndication(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetIndications(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def PostIndicationType(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetIndicationsTypes(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_IndicationsServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'PostIndication': grpc.unary_unary_rpc_method_handler(
-                    servicer.PostIndication,
-                    request_deserializer=indications__pb2.PostIndicationRequest.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            ),
-            'GetIndications': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetIndications,
-                    request_deserializer=indications__pb2.GetIndicationsRequest.FromString,
-                    response_serializer=indications__pb2.IndicationsResponse.SerializeToString,
-            ),
-            'PostIndicationType': grpc.unary_unary_rpc_method_handler(
-                    servicer.PostIndicationType,
-                    request_deserializer=indications__pb2.PostIndicationTypeRequest.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            ),
-            'GetIndicationsTypes': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetIndicationsTypes,
-                    request_deserializer=indications__pb2.GetIndicationsTypesRequest.FromString,
-                    response_serializer=indications__pb2.IndicationsTypesResponse.SerializeToString,
-            ),
+        "PostIndication": grpc.unary_unary_rpc_method_handler(
+            servicer.PostIndication,
+            request_deserializer=indications__pb2.PostIndicationRequest.FromString,
+            response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        ),
+        "GetIndications": grpc.unary_unary_rpc_method_handler(
+            servicer.GetIndications,
+            request_deserializer=indications__pb2.GetIndicationsRequest.FromString,
+            response_serializer=indications__pb2.IndicationsResponse.SerializeToString,
+        ),
+        "PostIndicationType": grpc.unary_unary_rpc_method_handler(
+            servicer.PostIndicationType,
+            request_deserializer=indications__pb2.PostIndicationTypeRequest.FromString,
+            response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        ),
+        "GetIndicationsTypes": grpc.unary_unary_rpc_method_handler(
+            servicer.GetIndicationsTypes,
+            request_deserializer=indications__pb2.GetIndicationsTypesRequest.FromString,
+            response_serializer=indications__pb2.IndicationsTypesResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'indications.Indications', rpc_method_handlers)
+        "indications.Indications", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Indications(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def PostIndication(request,
+    def PostIndication(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/indications.Indications/PostIndication',
+            "/indications.Indications/PostIndication",
             indications__pb2.PostIndicationRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetIndications(request,
+    def GetIndications(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/indications.Indications/GetIndications',
+            "/indications.Indications/GetIndications",
             indications__pb2.GetIndicationsRequest.SerializeToString,
             indications__pb2.IndicationsResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def PostIndicationType(request,
+    def PostIndicationType(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/indications.Indications/PostIndicationType',
+            "/indications.Indications/PostIndicationType",
             indications__pb2.PostIndicationTypeRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetIndicationsTypes(request,
+    def GetIndicationsTypes(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/indications.Indications/GetIndicationsTypes',
+            "/indications.Indications/GetIndicationsTypes",
             indications__pb2.GetIndicationsTypesRequest.SerializeToString,
             indications__pb2.IndicationsTypesResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

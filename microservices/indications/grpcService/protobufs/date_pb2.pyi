@@ -12,4 +12,9 @@ class Date(_message.Message):
     day: int
     month: int
     year: int
-    def __init__(self, year: _Optional[int] = ..., month: _Optional[int] = ..., day: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self,
+        year: _Optional[int] = ...,
+        month: _Optional[int] = ...,
+        day: _Optional[int] = ...,
+    ) -> None: ...

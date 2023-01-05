@@ -13,13 +13,15 @@ T = TypeVar("T")
 """ Acts like ES6 Proxy object.
     Class successor should implement field that will intercepted.
     All intercepted field can whether invoke field of original object through self.target object """
+
+
 class Proxy(ABC):
     def __init__(self, target: T) -> None:
         self.target: T = target
 
     def __getattribute__(self, __name: str) -> Any:
         # Check does object itself has that attrubute
-        result = object.__getattribute__(self, '__dict__').get(__name)
+        result = object.__getattribute__(self, "__dict__").get(__name)
 
         """ 
         Collection object do not impelement truth value testing or bool().
@@ -60,8 +62,10 @@ class MotorProxy(Proxy):
 
 def singleton(cls):
     instances = {}
+
     def wrapper(*args, **kwargs):
         if cls not in instances:
             instances[cls] = cls(*args, **kwargs)
         return instances[cls]
+
     return wrapper
