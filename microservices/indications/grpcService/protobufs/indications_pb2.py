@@ -6,7 +6,6 @@ from google.protobuf.internal import builder as _builder
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
-
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -16,31 +15,37 @@ import grpcService.protobufs.date_pb2 as date__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\n\x11indications.proto\x12\x0bindications\x1a\ndate.proto\x1a\x1bgoogle/protobuf/empty.proto"F\n\x15GetIndicationsRequest\x12\x18\n\x10indicationTypeID\x18\x01 \x01(\t\x12\x13\n\x0bmaxQuantity\x18\x02 \x01(\x05"s\n\x15PostIndicationRequest\x12\x19\n\x11indicationsTypeID\x18\x01 \x01(\t\x12\x12\n\nindication\x18\x02 \x01(\x05\x12\x1d\n\tcreatedAt\x18\x03 \x01(\x0b\x32\x05.DateH\x00\x88\x01\x01\x42\x0c\n\n_createdAt"`\n\nIndication\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nindication\x18\x02 \x01(\x05\x12\x18\n\x10indicationTypeID\x18\x03 \x01(\t\x12\x18\n\tcreatedAt\x18\x04 \x01(\x0b\x32\x05.Date"C\n\x13IndicationsResponse\x12,\n\x0bindications\x18\x01 \x03(\x0b\x32\x17.indications.Indication"D\n\x1aGetIndicationsTypesRequest\x12\x11\n\taddressID\x18\x01 \x01(\x05\x12\x13\n\x0bmaxQuantity\x18\x02 \x01(\x05"<\n\x19PostIndicationTypeRequest\x12\x11\n\taddressID\x18\x01 \x01(\x05\x12\x0c\n\x04type\x18\x02 \x01(\t"=\n\x0eIndicationType\x12\n\n\x02id\x18\x01 \x01(\t\x12\x11\n\taddressID\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\t"Q\n\x18IndicationsTypesResponse\x12\x35\n\x10indicationsTypes\x18\x01 \x03(\x0b\x32\x1b.indications.IndicationType2\xf8\x02\n\x0bIndications\x12N\n\x0ePostIndication\x12".indications.PostIndicationRequest\x1a\x16.google.protobuf.Empty"\x00\x12X\n\x0eGetIndications\x12".indications.GetIndicationsRequest\x1a .indications.IndicationsResponse"\x00\x12V\n\x12PostIndicationType\x12&.indications.PostIndicationTypeRequest\x1a\x16.google.protobuf.Empty"\x00\x12g\n\x13GetIndicationsTypes\x12\'.indications.GetIndicationsTypesRequest\x1a%.indications.IndicationsTypesResponse"\x00\x62\x06proto3'
-)
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11indications.proto\x12\x0bindications\x1a\ndate.proto\x1a\x1bgoogle/protobuf/empty.proto\"F\n\x15GetIndicationsRequest\x12\x18\n\x10indicationTypeID\x18\x01 \x01(\t\x12\x13\n\x0bmaxQuantity\x18\x02 \x01(\x05\"\x83\x01\n\x15PostIndicationRequest\x12\x0e\n\x06userID\x18\x01 \x01(\t\x12\x19\n\x11indicationsTypeID\x18\x02 \x01(\t\x12\x12\n\nindication\x18\x03 \x01(\x05\x12\x1d\n\tcreatedAt\x18\x04 \x01(\x0b\x32\x05.DateH\x00\x88\x01\x01\x42\x0c\n\n_createdAt\"@\n\x18IsUsersIndicationRequest\x12\x0e\n\x06userID\x18\x01 \x01(\t\x12\x14\n\x0cindicationID\x18\x02 \x01(\t\"p\n\nIndication\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nindication\x18\x02 \x01(\x05\x12\x18\n\x10indicationTypeID\x18\x03 \x01(\t\x12\x0e\n\x06userID\x18\x04 \x01(\t\x12\x18\n\tcreatedAt\x18\x05 \x01(\x0b\x32\x05.Date\"C\n\x13IndicationsResponse\x12,\n\x0bindications\x18\x01 \x03(\x0b\x32\x17.indications.Indication\"+\n\x19IsUsersIndicationResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\"D\n\x1aGetIndicationsTypesRequest\x12\x11\n\taddressID\x18\x01 \x01(\x05\x12\x13\n\x0bmaxQuantity\x18\x02 \x01(\x05\"L\n\x19PostIndicationTypeRequest\x12\x0e\n\x06userID\x18\x01 \x01(\t\x12\x11\n\taddressID\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\t\">\n\x1cIsUsersIndicationTypeRequest\x12\x0e\n\x06userID\x18\x01 \x01(\t\x12\x0e\n\x06typeID\x18\x02 \x01(\t\"M\n\x0eIndicationType\x12\n\n\x02id\x18\x01 \x01(\t\x12\x11\n\taddressID\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\x0e\n\x06userID\x18\x04 \x01(\t\"Q\n\x18IndicationsTypesResponse\x12\x35\n\x10indicationsTypes\x18\x01 \x03(\x0b\x32\x1b.indications.IndicationType\"/\n\x1dIsUsersIndicationTypeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x32\xd0\x04\n\x0bIndications\x12N\n\x0ePostIndication\x12\".indications.PostIndicationRequest\x1a\x16.google.protobuf.Empty\"\x00\x12X\n\x0eGetIndications\x12\".indications.GetIndicationsRequest\x1a .indications.IndicationsResponse\"\x00\x12V\n\x12PostIndicationType\x12&.indications.PostIndicationTypeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12g\n\x13GetIndicationsTypes\x12\'.indications.GetIndicationsTypesRequest\x1a%.indications.IndicationsTypesResponse\"\x00\x12\x64\n\x11IsUsersIndication\x12%.indications.IsUsersIndicationRequest\x1a&.indications.IsUsersIndicationResponse\"\x00\x12p\n\x15IsUsersIndicationType\x12).indications.IsUsersIndicationTypeRequest\x1a*.indications.IsUsersIndicationTypeResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, "indications_pb2", globals())
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'indications_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
-    DESCRIPTOR._options = None
-    _GETINDICATIONSREQUEST._serialized_start = 75
-    _GETINDICATIONSREQUEST._serialized_end = 145
-    _POSTINDICATIONREQUEST._serialized_start = 147
-    _POSTINDICATIONREQUEST._serialized_end = 262
-    _INDICATION._serialized_start = 264
-    _INDICATION._serialized_end = 360
-    _INDICATIONSRESPONSE._serialized_start = 362
-    _INDICATIONSRESPONSE._serialized_end = 429
-    _GETINDICATIONSTYPESREQUEST._serialized_start = 431
-    _GETINDICATIONSTYPESREQUEST._serialized_end = 499
-    _POSTINDICATIONTYPEREQUEST._serialized_start = 501
-    _POSTINDICATIONTYPEREQUEST._serialized_end = 561
-    _INDICATIONTYPE._serialized_start = 563
-    _INDICATIONTYPE._serialized_end = 624
-    _INDICATIONSTYPESRESPONSE._serialized_start = 626
-    _INDICATIONSTYPESRESPONSE._serialized_end = 707
-    _INDICATIONS._serialized_start = 710
-    _INDICATIONS._serialized_end = 1086
+  DESCRIPTOR._options = None
+  _GETINDICATIONSREQUEST._serialized_start=75
+  _GETINDICATIONSREQUEST._serialized_end=145
+  _POSTINDICATIONREQUEST._serialized_start=148
+  _POSTINDICATIONREQUEST._serialized_end=279
+  _ISUSERSINDICATIONREQUEST._serialized_start=281
+  _ISUSERSINDICATIONREQUEST._serialized_end=345
+  _INDICATION._serialized_start=347
+  _INDICATION._serialized_end=459
+  _INDICATIONSRESPONSE._serialized_start=461
+  _INDICATIONSRESPONSE._serialized_end=528
+  _ISUSERSINDICATIONRESPONSE._serialized_start=530
+  _ISUSERSINDICATIONRESPONSE._serialized_end=573
+  _GETINDICATIONSTYPESREQUEST._serialized_start=575
+  _GETINDICATIONSTYPESREQUEST._serialized_end=643
+  _POSTINDICATIONTYPEREQUEST._serialized_start=645
+  _POSTINDICATIONTYPEREQUEST._serialized_end=721
+  _ISUSERSINDICATIONTYPEREQUEST._serialized_start=723
+  _ISUSERSINDICATIONTYPEREQUEST._serialized_end=785
+  _INDICATIONTYPE._serialized_start=787
+  _INDICATIONTYPE._serialized_end=864
+  _INDICATIONSTYPESRESPONSE._serialized_start=866
+  _INDICATIONSTYPESRESPONSE._serialized_end=947
+  _ISUSERSINDICATIONTYPERESPONSE._serialized_start=949
+  _ISUSERSINDICATIONTYPERESPONSE._serialized_end=996
+  _INDICATIONS._serialized_start=999
+  _INDICATIONS._serialized_end=1591
 # @@protoc_insertion_point(module_scope)

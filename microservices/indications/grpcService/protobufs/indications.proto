@@ -10,9 +10,11 @@ service Indications {
     rpc GetIndications(GetIndicationsRequest) returns (IndicationsResponse) {}
     rpc PostIndicationType(PostIndicationTypeRequest) returns (google.protobuf.Empty) {}
     rpc GetIndicationsTypes(GetIndicationsTypesRequest) returns (IndicationsTypesResponse) {}
+    rpc IsUsersIndication(IsUsersIndicationRequest) returns (IsUsersIndicationResponse) {}
+    rpc IsUsersIndicationType(IsUsersIndicationTypeRequest) returns (IsUsersIndicationTypeResponse) {}
 }
 
-// Every ID field is ObjectID hex representation
+// Every ID field is ObjectID(mongoDB) hex representation
 
 // Indication
 
@@ -22,20 +24,31 @@ message GetIndicationsRequest {
 }
 
 message PostIndicationRequest {
-    string indicationsTypeID = 1;
-    int32 indication = 2;
-    optional Date createdAt = 3; // If date has a default value than DB value will date.now()
+    string userID = 1;
+    string indicationsTypeID = 2;
+    int32 indication = 3;
+    optional Date createdAt = 4; // If date has a default value than DB value will date.now()
+}
+
+message IsUsersIndicationRequest {
+    string userID = 1;
+    string indicationID = 2;    
 }
 
 message Indication {
     string id = 1;
     int32 indication = 2;
     string indicationTypeID = 3;
-    Date createdAt = 4;
+    string userID = 4;
+    Date createdAt = 5;
 }
 
 message IndicationsResponse {
     repeated Indication indications = 1;
+}
+
+message IsUsersIndicationResponse {
+    bool status = 1;
 }
 
 // Indication Type
@@ -46,16 +59,27 @@ message GetIndicationsTypesRequest {
 }
 
 message PostIndicationTypeRequest {
-    int32 addressID = 1;
-    string type = 2;
+    string userID = 1;
+    int32 addressID = 2;
+    string type = 3;
+}
+
+message IsUsersIndicationTypeRequest {
+    string userID = 1;
+    string typeID = 2;
 }
 
 message IndicationType {
     string id = 1;
     int32 addressID = 2;
     string type = 3;
+    string userID = 4;
 }
 
 message IndicationsTypesResponse {
     repeated IndicationType indicationsTypes = 1;
+}
+
+message IsUsersIndicationTypeResponse {
+    bool status = 1;
 }
