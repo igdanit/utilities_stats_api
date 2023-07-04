@@ -1,7 +1,8 @@
-import { Controller, Get, Body, Query, ParseIntPipe, Post, UseGuards, HttpStatus, Delete, Param, Put, Req,  } from '@nestjs/common';
+import { Controller, Get, Body, Post, UseGuards, Delete, Param, Put, ForbiddenException, ParseIntPipe } from '@nestjs/common';
 import { JwtAuthGuards } from 'src/auth/auth.jwt-guard';
 import { UserID } from 'src/decorators';
 import { AddressesService } from './addresses.service';
+import { Address } from '@prisma/client';
 
 @UseGuards(JwtAuthGuards)
 @Controller('address')
@@ -9,28 +10,33 @@ export class AddressesController {
 
     constructor(private readonly addressService: AddressesService) {}
 
-    @Get(':id')
-    async getAddresses(@Param('id', ParseIntPipe) userID: number ) {
-        const addressesList = await this.addressService.getUserAddresses(userID);
-        const addresses = Object.fromEntries(addressesList.entries());
-        return addresses
+    @Get()
+    async getAddresses(@UserID() userID: number): Promise<Address[]> {
+        return await this.addressService.getUserAddresses(userID)
     }
 
     @Post()
-    async addAddress(@Req() req: any, @Body() address: {address: string}, @UserID() id: number) {
+    async addAddress(@Body() address: {address: string}, @UserID() userID: number): Promise<Address[]> {
         await this.addressService.newAddress({
             address: address.address,
-            userID: id,
+            userID
         })
+        return await this.addressService.getUserAddresses(userID)
     }
 
     @Delete(':id')
-    async deleteAddress(@Param('id') addressID: number, @UserID() userID: number) {
-        return await this.addressService.delAddress(addressID, userID)
+    async deleteAddress(@Param('id', ParseIntPipe) addressID: number, @UserID() userID: number): Promise<Address[]> {
+        if (!await this.addressService.isPersonalAddress(addressID, userID)) throw new ForbiddenException(`Access denied. Deleting not self address not allowed`);
+        await this.addressService.delAddress(addressID);
+        return await this.addressService.getUserAddresses(userID);
     }
 
     @Put(':id')
-    async editAddress(@Param('id') addressID: number, @Body() newAddress: {address: string}, @UserID() userID: number) {
-        return await this.addressService.changeAddress(newAddress.address, addressID, userID)
+    async editAddress(@Param('id') addressID: number, @Body() newAddress: {address: string}, @UserID() userID: number): Promise<Address[]> {
+        if (!await this.addressService.isPersonalAddress(addressID, userID)) {
+            throw new ForbiddenException(`Access denied. Editing not self address not allowed`)
+        }
+        await this.addressService.changeAddress(newAddress.address, addressID, userID);
+        return await this.addressService.getUserAddresses(userID);
     }
 }

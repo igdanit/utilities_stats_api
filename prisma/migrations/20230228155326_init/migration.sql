@@ -1,7 +1,18 @@
 -- CreateTable
+CREATE TABLE "users" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "email" TEXT NOT NULL,
+    "username" TEXT,
+    "password" TEXT NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "addresses" (
     "id" SERIAL NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userID" INTEGER NOT NULL,
     "address" TEXT NOT NULL,
 
     CONSTRAINT "addresses_pkey" PRIMARY KEY ("id")
@@ -27,13 +38,19 @@ CREATE TABLE "indications" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "addresses_userId_address_key" ON "addresses"("userId", "address");
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "indication_types_type_addressId_key" ON "indication_types"("type", "addressId");
+CREATE INDEX "addresses_userID_idx" ON "addresses"("userID");
+
+-- CreateIndex
+CREATE INDEX "indication_types_addressId_idx" ON "indication_types"("addressId");
+
+-- CreateIndex
+CREATE INDEX "indications_indicationTypeId_idx" ON "indications"("indicationTypeId");
 
 -- AddForeignKey
-ALTER TABLE "addresses" ADD CONSTRAINT "addresses_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "addresses" ADD CONSTRAINT "addresses_userID_fkey" FOREIGN KEY ("userID") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "indication_types" ADD CONSTRAINT "indication_types_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "addresses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

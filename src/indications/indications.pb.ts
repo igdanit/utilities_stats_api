@@ -13,16 +13,23 @@ export interface GetIndicationsRequest {
 }
 
 export interface PostIndicationRequest {
+  userID: string;
   indicationsTypeID: string;
   indication: number;
   /** If date has a default value than DB value will date.now() */
   createdAt?: DateMessage | undefined;
 }
 
+export interface IsUsersIndicationRequest {
+  userID: string;
+  indicationID: string;
+}
+
 export interface Indication {
   id: string;
   indication: number;
-  indicationTypeID: number;
+  indicationTypeID: string;
+  userID: string;
   createdAt: DateMessage | undefined;
 }
 
@@ -30,24 +37,39 @@ export interface IndicationsResponse {
   indications: Indication[];
 }
 
+export interface IsUsersIndicationResponse {
+  status: boolean;
+}
+
 export interface GetIndicationsTypesRequest {
-  addressID: string;
+  addressID: number;
   maxQuantity: number;
 }
 
 export interface PostIndicationTypeRequest {
-  addressID: string;
+  userID: string;
+  addressID: number;
   type: string;
+}
+
+export interface IsUsersIndicationTypeRequest {
+  userID: string;
+  typeID: string;
 }
 
 export interface IndicationType {
   id: string;
-  addressID: string;
+  addressID: number;
   type: string;
+  userID: string;
 }
 
 export interface IndicationsTypesResponse {
   indicationsTypes: IndicationType[];
+}
+
+export interface IsUsersIndicationTypeResponse {
+  status: boolean;
 }
 
 export const INDICATIONS_PACKAGE_NAME = "indications";
@@ -60,6 +82,10 @@ export interface IndicationsClient {
   postIndicationType(request: PostIndicationTypeRequest): Observable<Empty>;
 
   getIndicationsTypes(request: GetIndicationsTypesRequest): Observable<IndicationsTypesResponse>;
+
+  isUsersIndication(request: IsUsersIndicationRequest): Observable<IsUsersIndicationResponse>;
+
+  isUsersIndicationType(request: IsUsersIndicationTypeRequest): Observable<IsUsersIndicationTypeResponse>;
 }
 
 export interface IndicationsController {
@@ -74,11 +100,26 @@ export interface IndicationsController {
   getIndicationsTypes(
     request: GetIndicationsTypesRequest,
   ): Promise<IndicationsTypesResponse> | Observable<IndicationsTypesResponse> | IndicationsTypesResponse;
+
+  isUsersIndication(
+    request: IsUsersIndicationRequest,
+  ): Promise<IsUsersIndicationResponse> | Observable<IsUsersIndicationResponse> | IsUsersIndicationResponse;
+
+  isUsersIndicationType(
+    request: IsUsersIndicationTypeRequest,
+  ): Promise<IsUsersIndicationTypeResponse> | Observable<IsUsersIndicationTypeResponse> | IsUsersIndicationTypeResponse;
 }
 
 export function IndicationsControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["postIndication", "getIndications", "postIndicationType", "getIndicationsTypes"];
+    const grpcMethods: string[] = [
+      "postIndication",
+      "getIndications",
+      "postIndicationType",
+      "getIndicationsTypes",
+      "isUsersIndication",
+      "isUsersIndicationType",
+    ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("Indications", method)(constructor.prototype[method], method, descriptor);

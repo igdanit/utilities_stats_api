@@ -1,6 +1,7 @@
 import {createParamDecorator, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 import { Buffer } from 'node:buffer';
 
+/* Extract sub field from JWT Payload provided as Bearer Token **/
 export const UserID = createParamDecorator(
     (data: unknown, ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest();
@@ -19,13 +20,13 @@ export const UserID = createParamDecorator(
             const payload = JSON.parse(Buffer.from(payloadAsBase64String, 'base64').toString())
 
             // Encoding payload from BASE64. Fetch sub field
-            userID = payload.sub
+            userID = payload.sub;
 
         } catch (e) {
             throw e
         } finally {
             if (userID === undefined) {
-                throw new UnauthorizedException('Bad JWT provided')
+                throw new UnauthorizedException('Bad Bearer Token')
             }
         }
 

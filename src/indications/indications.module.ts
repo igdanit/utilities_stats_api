@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { join } from 'path';
 import { IndicationsController } from './indications.controller';
 import { IndicationsService } from './indications.service';
 import { INDICATIONS_SERVICE_NAME, INDICATIONS_PACKAGE_NAME  } from './indications.pb';
+import { AddressesModule } from 'src/addresses/addresses.module';
 
 @Module({
     controllers: [IndicationsController],
@@ -19,7 +19,8 @@ import { INDICATIONS_SERVICE_NAME, INDICATIONS_PACKAGE_NAME  } from './indicatio
                     url : 'localhost:50051',
                 }
             }
-        ])
+        ]),
+        AddressesModule
     ]
 })
 export class IndicationsModule {}
