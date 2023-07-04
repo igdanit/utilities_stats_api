@@ -10,7 +10,7 @@ from motorService.serializer import grpcMessageToDictSerializer
 from config import settings
 
 # Initialize logger.py
-import logger
+from logger import logger
 
 
 async def main(*, uri="[::]:50051"):
@@ -23,8 +23,11 @@ async def main(*, uri="[::]:50051"):
         IndicationsService(database=db, serializer=serializer), server
     )
 
+    logger.info(f"Starting server at {uri}")
     await server.start()
+    logger.info("Server started")
     await server.wait_for_termination()
+    logger.info(f"Server stopped")
 
 
 if __name__ == "__main__":

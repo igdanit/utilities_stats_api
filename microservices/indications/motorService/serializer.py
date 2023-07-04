@@ -26,12 +26,14 @@ class grpcMessageToDictSerializer(grpcSerializer):
         return {
             "indication": document.indication,
             "indicationsTypeID": document.indicationsTypeID,
+            "userID": document.userID,
             "createdAt": cls.serialize_date(document.createdAt),
         }
 
     @classmethod
     def serialize_indication_type(cls, document: PostIndicationTypeRequest) -> dict:
         return {
+            "userID": document.userID,
             "addressID": document.addressID,
             "type": document.type,
         }

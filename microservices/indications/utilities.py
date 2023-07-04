@@ -54,7 +54,7 @@ class MotorProxy(Proxy):
         try:
             await self.target.insert_one(*args, **kwargs)
         except DuplicateKeyError as e:
-            raise IndexPairAlreadyExist(msg=e.error)
+            raise IndexPairAlreadyExist(msg=e.details['errmsg'])
         except Exception as e:
             logger.error(e)
             raise e

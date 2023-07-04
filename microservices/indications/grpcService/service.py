@@ -5,6 +5,10 @@ from grpc.aio import ServicerContext
 import grpcService.protobufs.indications_pb2_grpc as indications_pb2_grpc
 from grpcService.protobufs.indications_pb2 import (
     GetIndicationsRequest,
+    IsUsersIndicationRequest,
+    IsUsersIndicationResponse,
+    IsUsersIndicationTypeRequest,
+    IsUsersIndicationTypeResponse,
     PostIndicationRequest,
     PostIndicationTypeRequest,
     GetIndicationsTypesRequest,
@@ -32,9 +36,8 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
         self, request: GetIndicationsRequest, context: ServicerContext
     ):
         indications_list = await self._db.get_indications(
-            {"indicationTypeID": request.indicationTypeID}, request.maxQuantity
+            {"indicationsTypeID": request.indicationTypeID}, request.maxQuantity
         )
-
         # If there is no appropriate data
         if len(indications_list) == 0:
             context.set_code(grpc.StatusCode.NOT_FOUND)
@@ -49,8 +52,9 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
                     # Convert ObjectID to hex string
                     id=str(indication["_id"]),
                     indication=indication["indication"],
-                    indicationTypeID=indication["indicationTypeID"],
-                    createdAt=Date(**indication["cretedAt"]),
+                    indicationTypeID=indication["indicationsTypeID"],
+                    userID=indication["userID"],
+                    createdAt=Date(**indication["createdAt"]),
                 )
                 for indication in indications_list
             )
@@ -59,6 +63,8 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
     async def PostIndication(
         self, request: PostIndicationRequest, context: ServicerContext
     ):
+
+        print(request)
         # If date has default value then set date.now()
         if not (request.HasField("createdAt")):
             today = datetime.utcnow()
@@ -73,7 +79,7 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
             context.set_details(e.msg)
         return Empty()
 
-    async def getIndicationsTypes(
+    async def GetIndicationsTypes(
         self, request: GetIndicationsTypesRequest, context: ServicerContext
     ):
         indication_types_list = await self._db.get_indication_types(
@@ -88,12 +94,13 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
             )
 
         return IndicationsTypesResponse(
-            (
+            indicationsTypes=(
                 IndicationType(
                     # Convert ObjectID to hex string
                     id=str(indication_type["_id"]),
                     addressID=indication_type["addressID"],
                     type=indication_type["type"],
+                    userID=indication_type["userID"],
                 )
                 for indication_type in indication_types_list
             )
@@ -110,3 +117,23 @@ class IndicationsService(indications_pb2_grpc.IndicationsServicer):
             context.set_code(grpc.StatusCode.ALREADY_EXISTS)
             context.set_details(e.msg)
         return Empty()
+
+    async def IsUsersIndicationType(self, request: IsUsersIndicationTypeRequest, context: ServicerContext) -> IsUsersIndicationTypeResponse:
+       query = {
+        "_id": request.typeID, 
+        "userID": request.userID,
+       }
+       indication_type = await self._db.get_one_indication_type(query)
+       return IsUsersIndicationTypeResponse(
+        status=indication_type is not None
+        )
+
+    async def IsUsersIndication(self, request: IsUsersIndicationRequest, context: ServicerContext) -> IsUsersIndicationResponse:
+        query = {
+            "_id": request.indicationID,
+            "userID": request.userID,
+        }
+        indication = await self._db.get_one_indication(query)
+        return IsUsersIndicationResponse(
+            status=indication is not None
+        )
