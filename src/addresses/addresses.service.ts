@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Address, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AddressesPrisma } from './addresses.prisma';
 import { newAddress } from './dto';
@@ -20,27 +20,23 @@ export class AddressesService extends AddressesPrisma{
     }
 
     async changeAddress(address: string, addressID: number, userID: number) {
-
-        // Fetch list of addresses
-        const userAddresseIDs = await this.getUserAddresses(userID)
-
-        // Verify presence of address and edit it
-        if (userAddresseIDs.some((address) => address.id === addressID)) {
-            return await this.editAddress(address, addressID)
-        }
-        
-        throw new BadRequestException("Address doesn't exist")
-        
+        return await this.editAddress(address, addressID)
     }
 
-    async delAddress(addressId: number, userId: number) {
+    async delAddress(addressId: number) {
         try {
             await this.deleteAddress(addressId)
         } catch (exception) {
             if (exception instanceof Prisma.PrismaClientKnownRequestError && exception.code === 'P2015') {
-                return {'Status Code': 401, message:"Entry doesn't exist"}
+                throw new NotFoundException(`Entry doesn't exist`)
             }
         }
+    }
+
+    /* Check whether address belongs to user **/
+    async isPersonalAddress(addressID: number, userID: number): Promise<boolean> {
+        const userAddrs = await this.getUserAddresses(userID);
+        return userAddrs.some((addr: Address) => addr.id === addressID)
     }
 
 }

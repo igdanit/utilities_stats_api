@@ -1,5 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res, UseGuards, UsePipes } from '@nestjs/common';
-import { Response } from 'express';
+import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { UserID } from 'src/decorators';
 import { newUser, UserDTO } from 'src/users/dto/user.dto';
 import { UsersService } from 'src/users/users.service';
@@ -17,19 +16,17 @@ export class AuthController {
 
     // Add new user
     @Post('sign-up')
-    async signUp(@Body() user: newUser, @Res() res: Response) {
+    @HttpCode(201)
+    async signUp(@Body() user: newUser) {
+        console.log(user)
         await this.usersService.addUser(user)
-        
-        res.statusCode = HttpStatus.CREATED;
-        res.send({
-            statusCode: HttpStatus.CREATED,
-            message: "User created",
-        })
+        return await this.authService.login(user)
     }
 
     // Issue JWT
     @Post('sign-in')
     async signIn(@Body() user: UserDTO) {
+        console.log(user)
         return await this.authService.login(user)
     }
 

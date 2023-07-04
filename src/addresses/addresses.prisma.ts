@@ -1,7 +1,8 @@
-import { ForbiddenException } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { newAddress } from "./dto";
 
+@Injectable()
 export class AddressesPrisma {
     constructor(protected readonly prismaService: PrismaService) {}
     

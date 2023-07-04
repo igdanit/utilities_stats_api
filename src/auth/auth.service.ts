@@ -12,18 +12,18 @@ export class AuthService {
         private readonly jwtService: JwtService    
     ) {}
 
-    async validateUser(user: UserDTO): Promise< Omit<User, 'passwordHash'> > {
+    async validateUser(user: UserDTO): Promise< Omit<User, 'password'> > {
 
         // Get the user entry from DB
         const userEntry = await this.usersService.getUser(user)
 
         // Compare the passwords from request and DB
-        if (user.passwordHash !== userEntry.passwordHash) {
+        if (user.password !== userEntry.password) {
             throw new UnauthorizedException('Bad credentials')
         }
 
         // Delete password from user entry
-        const {passwordHash, ...result} = userEntry;
+        const {password, ...result} = userEntry;
 
         return result
     }
@@ -38,7 +38,7 @@ export class AuthService {
 
     async signPayload(payload: {sub: number}) {
         return {
-            access_token: this.jwtService.sign(payload),
+            accessToken: this.jwtService.sign(payload),
         }
     }
 

@@ -12,7 +12,7 @@ model User {
   createdAt DateTime @default(now())
   email String @unique
   username String?
-  passwordHash String
+  password String
   addresses Address[]
 
   @@map("users") 
@@ -22,31 +22,31 @@ model Address {
   id Int @id @default(autoincrement())
   userID Int
   address String
-  indication_type IndicationType[]
+  // indication_type IndicationType[]
   owner User @relation(fields: [userID], references: [id])
 
   @@map("addresses")
   @@index([userID])
 }
 
-model IndicationType {
-  id Int @id @default(autoincrement())
-  addressId Int
-  address Address @relation(fields: [addressId], references: [id])
-  type String  
-  indication Indication[]
+// model IndicationType {
+//   id Int @id @default(autoincrement())
+//   addressId Int
+//   address Address @relation(fields: [addressId], references: [id])
+//   type String  
+//   indication Indication[]
 
-  @@map("indication_types")
-  @@index([addressId])
-}
+//   @@map("indication_types")
+//   @@index([addressId])
+// }
 
-model Indication {
-  id Int @id @default(autoincrement())
-  indicationTypeId Int
-  indicationType IndicationType @relation(fields: [indicationTypeId], references: [id])
-  createdAt DateTime @default(now())
-  indications Int
+// model Indication {
+//   id Int @id @default(autoincrement())
+//   indicationTypeId Int
+//   indicationType IndicationType @relation(fields: [indicationTypeId], references: [id])
+//   createdAt DateTime @default(now())
+//   indications Int
 
-  @@map("indications")
-  @@index([indicationTypeId])
-}
+//   @@map("indications")
+//   @@index([indicationTypeId])
+// }

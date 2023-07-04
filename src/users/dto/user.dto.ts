@@ -9,7 +9,7 @@ export class newUser {
     email: string;
 
     @IsString()
-    passwordHash: string;
+    password: string;
 }
 
 export class UserDTO {
@@ -17,5 +17,5 @@ export class UserDTO {
     email: string;
 
     @IsString()
-    passwordHash: string;
+    password: string;
 }
