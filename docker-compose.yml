@@ -1,6 +1,11 @@
 version: '3.6'
 
 services:
+  api:
+    build: .
+    ports: "3000:3000"
+    links:
+      - "db:psql1"
 
   db:
     image: postgres
