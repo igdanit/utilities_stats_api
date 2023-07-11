@@ -1,6 +1,5 @@
 FROM python:3.11
-WORKDIR /code
+WORKDIR /etc/indicationService/
 COPY . .
-RUN pip install requirements.txt
-CMD python motorService/initial_script.py \
-    && python main.py
+RUN pip install -r requirements.txt
+CMD ["python", "main.py"]

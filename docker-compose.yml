@@ -4,6 +4,8 @@ services:
   api:
     build: .
     ports: "3000:3000"
+    networks:
+      - network1
     links:
       - "db:psql1"
 
@@ -11,6 +13,31 @@ services:
     image: postgres
     ports:
       - 5432:5432
+    networks:
+      - network1
+    volumes:
+      - db_volum:/etc/postgresDB
+    env_file:
+      - ./.env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: dev
+      POSTGRES_USER: "$DOCKER_POSTGRES_USER"
+      POSTGRES_PASSWORD: "$DOCKER_POSTGRES_PASSWORD"
+
+  nginx:
+    build:
+      dockerfile: nginx.docker
+    ports:
+      - 80:80
+    networks:
+      - network1
+    volumes:
+      - nginx_volum:/etc/app
+
+networks:
+  network1:
+    external: true
+    name: app_network
+  
+volumes:
+  db_volum:
+  nginx_volum:

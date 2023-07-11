@@ -1,0 +1,6 @@
+FROM nginx:1.25
+WORKDIR /etc/app
+COPY nginx.conf .
+WORKDIR /static
+COPY ./static /static
+VOLUME /etc/app

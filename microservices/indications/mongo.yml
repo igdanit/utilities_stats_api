@@ -13,8 +13,20 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
       - 8081:27017
+    networks:
+      - network1
+    volumes:
+      - mongo_volum
 
   indication_api:
-    image: .
+    build: .
     ports:
       - 50051:50051
+
+networks:
+  network1:
+    external: true
+    name: app_network
+
+volumes:
+  mongo_volum:
