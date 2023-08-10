@@ -4,7 +4,6 @@ import { JwtAuthGuards } from 'src/auth/auth.jwt-guard';
 import { UserID } from 'src/decorators';
 import { PostIndicationRequest, PostIndicationTypeRequest} from './indications.pb'
 import { IndicationsService } from './indications.service';
-import { GrpcMethod } from '@nestjs/microservices';
 import * as grpc from "@grpc/grpc-js";
 
 @UseGuards(JwtAuthGuards)

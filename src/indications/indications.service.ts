@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { INDICATIONS_SERVICE_NAME, IndicationsClient, GetIndicationsRequest, GetIndicationsTypesRequest, PostIndicationRequest, PostIndicationTypeRequest, IndicationsResponse, IndicationType} from './indications.pb'
 import * as grpc from '@grpc/grpc-js';
 import { Result, SuccessfulResult, FailedResult } from '../utilities'

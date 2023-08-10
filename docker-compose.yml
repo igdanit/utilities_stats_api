@@ -3,7 +3,8 @@ version: '3.6'
 services:
   api:
     build: .
-    ports: "3000:3000"
+    ports: 
+      - 3000:3000
     networks:
       - network1
     links:
@@ -31,7 +32,7 @@ services:
     networks:
       - network1
     volumes:
-      - nginx_volum:/etc/app
+      - nginx_volum:/etc/indicatioApp
 
 networks:
   network1:

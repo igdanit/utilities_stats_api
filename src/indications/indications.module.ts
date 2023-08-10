@@ -15,7 +15,7 @@ import { AddressesModule } from 'src/addresses/addresses.module';
                 transport: Transport.GRPC,
                 options: {
                     package: INDICATIONS_PACKAGE_NAME,
-                    protoPath: "microservices/indications/grpcService/protobufs/indications.proto",
+                    protoPath: "protobufs/indications.proto",
                     url : 'localhost:50051',
                 }
             }

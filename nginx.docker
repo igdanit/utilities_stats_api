@@ -1,6 +1,6 @@
 FROM nginx:1.25
-WORKDIR /etc/app
+WORKDIR /etc/nginx
 COPY nginx.conf .
-WORKDIR /static
-COPY ./static /static
-VOLUME /etc/app
+WORKDIR /etc/indicationApp/static
+COPY ./static .
+VOLUME /etc/indicationApp

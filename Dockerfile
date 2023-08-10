@@ -1,5 +1,7 @@
 FROM node:20.3
-WORKDIR /code
-COPY /dist /API
-WORKDIR API
+WORKDIR /etc/indicationAPI
+COPY ./dist .
+COPY ./package.json .
+COPY ./package-lock.json .
+RUN npm install
 CMD ["node", "main.js"]
